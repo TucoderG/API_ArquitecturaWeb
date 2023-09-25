@@ -22,19 +22,19 @@
  Turnos
   
   - /get/Turno/             Requiere: ID del turno y Authenticación 
-  - /post/Turno/            Requiere: ID del turno y del psicologo, DNI del paciente, fecha del dia, hora de comienzo, Authenticación y Rol de paciente.
+  - /post/Turno/            Requiere: ID del turno y del psicólogo, DNI del paciente, fecha del dia, hora de comienzo, Authenticación y Rol de paciente.
   - /put/Turno/             Requiere: ID del turno y fecha a modificar, Authenticación y Rol de paciente.
   - /remove/Turno/          Requiere: ID del turno, Authenticación y Rol de administrador.
   - /cancelar/Turno/        Requiere: ID del turno, DNI del paciente, Authenticación y Rol de paciente.
   - /get/Turnos/Semama/     Requiere: DNI del paciente y Authenticación.
  
  
- Psicologo
+ Psicólogo
   
-  - /get/Psicologo/         Requiere: ID del psicologo, Authenticación y Rol de terapista.
-  - /post/Psicologo/        Requiere: Datos del psicologo, Authenticación y Rol de administrador.
-  - /put/Psicologo/         Requiere: ID del psicologo y turno o email a modificar, Authenticación y Rol de psicologo.
-  - /remove/Psicologo/      Requiere: ID del psicologo, Authenticación y Rol de administrador.
+  - /get/psicólogo/         Requiere: ID del psicólogo, Authenticación y Rol de psicólogo.
+  - /post/psicólogo/        Requiere: Datos del psicólogo, Authenticación y Rol de administrador.
+  - /put/psicólogo/         Requiere: ID del psicólogo y turno o email a modificar, Authenticación y Rol de psicólogo.
+  - /remove/psicólogo/      Requiere: ID del psicólogo, Authenticación y Rol de administrador.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -65,13 +65,12 @@ JWT: Sesion de usuario y authenticación para restringir el acceso de algunas ru
 
 # Información
 
-La API estará construida de manera modular, es decir, mantendré separada cada parte que conforme este software en grupos como, por ejemplo, rutas, controladores, middlewares, funciones, base de datos (Oracle), variables de desarrollo. etc.
+La API estará construida de manera modular, es decir, mantendré separada cada parte que conforme este software en grupos como, por ejemplo, rutas, controladores, middlewares, funciones, base de datos (Oracle), variables de entorno. etc.
 Para ver los datos obtenidos por las distintas rutas utilizaré Postman en un servidor local con las rutas y los métodos correspondientes para las acciones CRUD (limitadas según el rol del usuario que quiera acceder). 
 
 # Roles
 
-Los Roles que van a existir serán: Terapista, Paciente, Administrador.
-El Rol Administrador (Único), tendrá acceso a todas las acciones.
-El Rol Paciente (Lo creará un psicologo o Administrador), podrá manejar la creación, modificación o eliminación de turnos y ver su historial de citas. 
-El Rol Psicologo (Lo crea el usuario Administrador) podrá ver el historial de sus turnos (en general o por paciente), modificar o cancelar turnos y cambiar de horario de atención.
+- Administrador   (Único), tendrá acceso a todas las acciones.
+- Paciente        (Lo creará un psicólogo o Administrador), podrá manejar la creación, modificación o eliminación de turnos y ver su historial de citas. 
+- Psicólogo       (Lo crea el usuario Administrador) podrá ver el historial de sus turnos (en general o por paciente), modificar o cancelar turnos y cambiar de horario de atención.
 
