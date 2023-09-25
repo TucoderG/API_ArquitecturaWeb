@@ -1,4 +1,44 @@
-# Tecnologías a utilizar
+# EndPoints
+
+ Todos
+ 
+  - /get/{{recurso}}/all    Requiere: Nombre de la tabla, Authenticación y Rol de administrador.
+
+ Sesion
+ 
+  - /login/singUp/          Requiere: ID de usuario y password.
+  - /login/singIn           Requiere: ID de usuario y password.
+
+ Pacientes
+ 
+  - /get/Paciente/          Requiere: DNI del paciente y Authenticación.
+  - /post/Paciente/         Requiere: Datos del paciente, Authenticación y Rol que no sea paciente.
+  - /put/Paciente           Requiere: DNI del paciente, email para actualizar, Authenticación y Rol de paciente.
+  - /remove/Paciente        Requiere: DNI del paciente, Authenticación y Rol de admin.
+
+    Historial:
+        - /get/Paciente/Exel      Requiere: DNI del paciente, Authenticación y Rol de paciente.
+ 
+ Turnos
+  
+  - /get/Turno/             Requiere: ID del turno y Authenticación 
+  - /post/Turno/            Requiere: ID del turno y del psicologo, DNI del paciente, fecha del dia, hora de comienzo, Authenticación y Rol de paciente.
+  - /put/Turno/             Requiere: ID del turno y fecha a modificar, Authenticación y Rol de paciente.
+  - /remove/Turno/          Requiere: ID del turno, Authenticación y Rol de administrador.
+  - /cancelar/Turno/        Requiere: ID del turno, DNI del paciente, Authenticación y Rol de paciente.
+  - /get/Turnos/Semama/     Requiere: DNI del paciente y Authenticación.
+ 
+ 
+ Psicologo
+  
+  - /get/Psicologo/         Requiere: ID del psicologo, Authenticación y Rol de terapista.
+  - /post/Psicologo/        Requiere: Datos del psicologo, Authenticación y Rol de administrador.
+  - /put/Psicologo/         Requiere: ID del psicologo y turno o email a modificar, Authenticación y Rol de psicologo.
+  - /remove/Psicologo/      Requiere: ID del psicologo, Authenticación y Rol de administrador.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Tecnologías
 
 Gestor de versiones: Git 
 Repositorio de código: GitHub
@@ -32,44 +72,6 @@ Para ver los datos obtenidos por las distintas rutas utilizaré Postman en un se
 
 Los Roles que van a existir serán: Terapista, Paciente, Administrador.
 El Rol Administrador (Único), tendrá acceso a todas las acciones.
-El Rol Paciente (Lo creará un Terapista o Administrador), podrá manejar la creación, modificación o eliminación de turnos y ver su historial de citas. 
-El Rol Terapista (Lo crea el usuario Administrador) podrá ver el historial de sus turnos (en general o por paciente), modificar o cancelar turnos y cambiar de horario de atención.
+El Rol Paciente (Lo creará un psicologo o Administrador), podrá manejar la creación, modificación o eliminación de turnos y ver su historial de citas. 
+El Rol Psicologo (Lo crea el usuario Administrador) podrá ver el historial de sus turnos (en general o por paciente), modificar o cancelar turnos y cambiar de horario de atención.
 
-
-# EndPoints
-
- Todos
- 
-  - /get/{{recurso}}/all    Requiere: nombre de la tabla, Authenticación y Rol de administrador.
-
- Sesion
- 
-  - /login/singUp/          Requiere: ID de usuario y password.
-  - /login/singIn           Requiere: ID de usuario y password.
-
- Pacientes
- 
-  - /get/paciente/          Requiere: DNI del paciente y Authenticación.
-  - /post/paciente/         Requiere: Datos del paciente, Authenticación y Rol que no sea paciente.
-  - /put/Paciente           Requiere: DNI del paciente, email para actualizar, Authenticación y Rol de paciente.
-  - /remove/Paciente        Requiere: DNI del paciente, Authenticación y Rol de admin.
-
-    Historial:
-        - /get/Paciente/Exel      Requiere: DNI del paciente, Authenticación y Rol de paciente.
- 
- Turnos
-  
-  - /get/Turno/             Requiere: ID del turno y Authenticación 
-  - /post/Turno/            Requiere: ID del turno y del terapista, DNI del paciente, fecha del dia, hora de comienzo, Authenticación y Rol de paciente.
-  - /put/Turno/             Requiere: ID del turno y fecha a modificar, Authenticación y Rol de paciente.
-  - /remove/Turno/          Requiere: ID del turno, Authenticación y Rol de administrador.
-  - /cancelar/Turno/        Requiere: ID del turno, DNI del paciente, Authenticación y Rol de paciente.
-  - /get/Turnos/Semama/     Requiere: DNI del paciente y Authenticación.
- 
- 
- Terapistas
-  
-  - /get/Terapista/         Requiere: ID del terapista, Authenticación y Rol de terapista.
-  - /post/Terapista/        Requiere: Datos del terapista, Authenticación y Rol de administrador.
-  - /put/Terapista/         Requiere: ID del terapista y turno o email a modificar, Authenticación y Rol de terapista.
-  - /remove/Terapista/      Requiere: ID del terapista, Authenticación y Rol de administrador.
