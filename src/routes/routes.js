@@ -1,11 +1,10 @@
 // Importación de modulos
 const express = require('express');
+const pacienteDB = require('../controllers/paciente');
 
 const router = express();
 
 // EndPoints
-router.get('/', (req, res)=>{
-    return res.status(200).json({"status": "success", "message": "Hola!"});
-})
+router.get('/get/Paciente/:dni', pacienteDB.getPaciente);
 
 module.exports = router;

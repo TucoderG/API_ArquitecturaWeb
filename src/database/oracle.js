@@ -5,18 +5,22 @@ const oracle = require('oracledb');
 require('dotenv').config(options = {path: '.env'});
 
 // Atributos de Conexión 
+
 const connection = {
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    connectionString: process.env.CONNECTIONSTRING,
-    port: process.env.PORT,
+    user: process.env.BD_ORACLE_USERNAME,
+    password: process.env.DB_ORACLE_PASSWORD,
+    connectionString: process.env.DB_ORACLE_CONNECTIONSTRING,
+    port: process.env.DB_ORACLE_PORT,
     trustServerCertificate: true,
     stream: true,
 }
 
+
 // Obtengo la conexión
 async function getConnection(){
+    
     try{
+        console.log(connection)
         const pool = await oracle.getConnection(connection);
         return pool;
     }catch(error){
