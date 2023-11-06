@@ -20,7 +20,6 @@ const connection = {
 async function getConnection(){
     
     try{
-        console.log(connection)
         const pool = await oracle.getConnection(connection);
         return pool;
     }catch(error){

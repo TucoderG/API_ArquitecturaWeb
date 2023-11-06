@@ -3,20 +3,19 @@ const { validacionEntrada } = require('./generalFunctions');
 const { getConnection, closeConnection, commitPool } = require('../database/oracle');
 
 
-
-const getPaciente = async (req, res) => {
+const getPatologia = async (req, res) => {
     var message = "";
     /*
-        Trae de la BD un paciente con sus 3 campos (DNI, NOMBRE, EMAIL) desde su DNI 
+        Trae de la BD una Patologia con su descripcion desde su ID
     */
     message = validacionEntrada(req);
     const pool = await getConnection();
     try{
         if(message !== "") throw new Error(message);
-        const { dni } = req.params;
-        const result = await pool.execute("SELECT * FROM Paciente where dni = :dni", [dni]);
+        const { id_patologia } = req.params;
+        const result = await pool.execute("SELECT * FROM Patologia where id_patologia = :id_patologia", [id_patologia]);
         if(!result.rows[0]) throw new Error(em.NO_ENCONTRO_PACIENTE);
-        return res.status(200).json({"status": "succes", "Paciente": result.rows});
+        return res.status(200).json({"status": "succes", "Patologia": result.rows});
         
     }catch(error){
         if(error.message.includes("Ingrese")){
@@ -29,21 +28,26 @@ const getPaciente = async (req, res) => {
     }
 }
 
-const postPaciente = async (req, res) => {
+const postPatologia = async (req, res) => {
     var message = "";
     /*
-        Crea un Paciente
+        Crea una Patologia 
     */
     message = validacionEntrada(req);
     const pool = await getConnection();
     try{
         if(message !== "") throw new Error(message);
         
-        const { dni, name, email } = req.query;
-        const result = await pool.execute("INSERT INTO Paciente(dni, nombre, email) VALUES (:dni, :name, :email)", [dni, name, email]);
+        const { descripcion } = req.query;
+        
+        var maxId = await getMaxIdPatologia(pool, descripcion);
+        if(maxId == null) throw new Error(em.PATOLOGIA_EXISTENT);
+        maxId = parseInt(maxId) + 1;
+
+        const result = await pool.execute("INSERT INTO Patologia(id_patologia, descripcion) VALUES (:maxId, :descripcion)", [maxId, descripcion]);
         if(result.rowsAffected < 1) throw new Error(em.PACIENTE_NO_INSERTADO);
         commitPool(pool);
-        return res.status(200).json({"status": "succes", "message": "Paciente creado correctamente!"});
+        return res.status(200).json({"status": "succes", "message": "Patologia creado correctamente!"});
         
     }catch(error){
         if(error.message.includes("Ingrese")){
@@ -57,7 +61,7 @@ const postPaciente = async (req, res) => {
     }
 }
 
-const putPaciente = async (req, res) => {
+const putPatologia = async (req, res) => {
     var message = "";
     /*
         Trae de la BD un paciente desde su DNI y modifica el email
@@ -66,11 +70,11 @@ const putPaciente = async (req, res) => {
     const pool = await getConnection();
     try{
         if(message !== "") throw new Error(message);
-        const { dni, email } = req.query;
-        const result = await pool.execute("UPDATE Paciente SET(email) = (:email) WHERE dni = :dni", [email, dni]);
+        const { id_patologia, descripcion } = req.query;
+        const result = await pool.execute("UPDATE Patologia SET(descripcion) = (:descripcion) WHERE id_patologia = :id_patologia", [descripcion, id_patologia]);
         if(result.rowsAffected < 1) throw new Error(em.PACIENTE_NO_INSERTADO);
         commitPool(pool);
-        return res.status(200).json({"status": "succes", "message": "Email del paciente modificado con exito!"});
+        return res.status(200).json({"status": "succes", "message": "Descripcion de la Patologia modificado con exito!"});
         
     }catch(error){
         if(error.message.includes("Ingrese")){
@@ -84,21 +88,21 @@ const putPaciente = async (req, res) => {
 }
 
 
-const deletePaciente = async (req, res) => {
+const deletePatologia = async (req, res) => {
     var message = "";
     /*
-        Elimina un paciente de la BD desde su DNI 
+        Elimina una Patologia de la BD desde su ID
     */
     message = validacionEntrada(req);
     const pool = await getConnection();
     try{
         if(message !== "") throw new Error(message);
-        const { dni } = req.params;
+        const { id_patologia } = req.params;
         
-        const result = await pool.execute("DELETE Paciente where dni = :dni", [dni]);
+        const result = await pool.execute("DELETE Patologia where id_patologia = :id_patologia", [id_patologia]);
         if(result.rowsAffected < 1) throw new Error(em.PACIENTE_NO_ELIMINADO);
         commitPool(pool);
-        return res.status(200).json({"status": "succes", "message": "Paciente eliminado correctamente!"});
+        return res.status(200).json({"status": "succes", "message": "Patologia eliminada correctamente!"});
         
     }catch(error){
         if(error.message.includes("Ingrese")){
@@ -111,12 +115,37 @@ const deletePaciente = async (req, res) => {
     }
 }
 
+const getIdPatologia = async (pool, nombre_patologia) => {
 
+    /*
+
+        Obtengo el ID de una patologia desde su descripcion
+
+    */
+    const result = await pool.execute("SELECT id_patologia FROM Patologia WHERE descripcion LIKE :nombre_patologia", [nombre_patologia]);
+    if(!result.rows[0]) throw new Error(em.NO_ENCONTRO_PATOLOGIA);
+    return result.rows[0][0];
+    
+}
+
+const getMaxIdPatologia = async (pool, descripcion) =>{
+    /*
+
+        Obtengo el maximo id de la patologia para crear una nueva
+
+    */
+    const existPatologia = await pool.execute("SELECT id_patologia FROM Patologia WHERE descripcion LIKE :descripcion", [descripcion]);
+    if(existPatologia.rows[0]) return null;
+    
+    const result = await pool.execute("SELECT MAX(id_patologia) FROM Patologia");
+    return result.rows[0][0]
+}
 
 module.exports = {
-    getPaciente,
-    postPaciente,
-    putPaciente,
-    deletePaciente,
+    getPatologia,
+    postPatologia,
+    putPatologia,
+    deletePatologia,
+    getIdPatologia,
 
 }
