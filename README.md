@@ -2,39 +2,35 @@
 
  Todos
  
-  - /get/{{recurso}}/all    Requiere: Nombre de la tabla, Authenticación y Rol de administrador.
+  - /get/:recurso/all       Requiere: Nombre de la tabla.
 
- Sesion
- 
-  - /login/singUp/          Requiere: ID de usuario y password.
-  - /login/singIn           Requiere: ID de usuario y password.
 
  Pacientes
  
-  - /get/Paciente/          Requiere: DNI del paciente y Authenticación.
-  - /post/Paciente/         Requiere: Datos del paciente, Authenticación y Rol que no sea paciente.
-  - /put/Paciente           Requiere: DNI del paciente, email para actualizar, Authenticación y Rol de paciente.
-  - /remove/Paciente        Requiere: DNI del paciente, Authenticación y Rol de admin.
+  - /Paciente/:dni                  Parametro: DNI del paciente
+  - /Paciente/                      Query String: DNI, name, email
+  - /Paciente/:dni                  Parametro: DNI | Query String: email
+  - /Paciente/:dni                  Parametro: DNI del paciente
 
-    Historial:
-        - /get/Paciente/Exel      Requiere: DNI del paciente, Authenticación y Rol de paciente.
+ Patologias
+
+  - /Patologia/:id_patologia        Parametro: id_patologia
+  - /Patologia/                     Query String: id_patologia, descripcion de la patologia
+  - /Patologia/:id_patologia        Parametro: id_patologia | QueryString: descripcion de la patologia
+  - /Patologia/:id_patologia        Parametro: id_patologia
  
- Turnos
-  
-  - /get/Turno/             Requiere: ID del turno y Authenticación 
-  - /post/Turno/            Requiere: ID del turno y del psicólogo, DNI del paciente, fecha del dia, hora de comienzo, Authenticación y Rol de paciente.
-  - /put/Turno/             Requiere: ID del turno y fecha a modificar, Authenticación y Rol de paciente.
-  - /remove/Turno/          Requiere: ID del turno, Authenticación y Rol de administrador.
-  - /cancelar/Turno/        Requiere: ID del turno, DNI del paciente, Authenticación y Rol de paciente.
-  - /get/Turnos/Semama/     Requiere: DNI del paciente y Authenticación.
- 
- 
+ Patologias Del Paciente
+
+ - /Paciente/:dni/Patologia/         Parametro: DNI del paciente
+ - /Paciente/:dni/Patologia/         Parametro: DNI del paciente | Query String: descripcion de la patologia
+ - /Paciente/:dni/Patologia/         Parametro: DNI del paciente
+    
  Psicólogo
   
-  - /get/psicólogo/         Requiere: ID del psicólogo, Authenticación y Rol de psicólogo.
-  - /post/psicólogo/        Requiere: Datos del psicólogo, Authenticación y Rol de administrador.
-  - /put/psicólogo/         Requiere: ID del psicólogo y turno o email a modificar, Authenticación y Rol de psicólogo.
-  - /remove/psicólogo/      Requiere: ID del psicólogo, Authenticación y Rol de administrador.
+  - /Psicólogo/:id_psicologo         Requiere: ID del psicólogo, Authenticación y Rol de psicólogo.
+  - /Psicólogo/                      Requiere: Datos del psicólogo, Authenticación y Rol de administrador.
+  - /Psicólogo/:id_psicologo         Requiere: ID del psicólogo y turno o email a modificar, Authenticación y Rol de psicólogo.
+  - /Psicólogo/:id_psicologo         Requiere: ID del psicólogo, Authenticación y Rol de administrador.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
