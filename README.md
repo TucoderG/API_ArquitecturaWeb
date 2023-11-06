@@ -27,10 +27,10 @@
     
  Psicólogo
   
-  - /Psicólogo/:id_psicologo         Requiere: ID del psicólogo, Authenticación y Rol de psicólogo.
-  - /Psicólogo/                      Requiere: Datos del psicólogo, Authenticación y Rol de administrador.
-  - /Psicólogo/:id_psicologo         Requiere: ID del psicólogo y turno o email a modificar, Authenticación y Rol de psicólogo.
-  - /Psicólogo/:id_psicologo         Requiere: ID del psicólogo, Authenticación y Rol de administrador.
+  - /Psicólogo/:id_psicologo         Parametro: ID del psicologo
+  - /Psicólogo/                      Query String: ID del psicologo, nombre, turno
+  - /Psicólogo/:id_psicologo         Parametro: ID del psicologo | Query String: turno 
+  - /Psicólogo/:id_psicologo         Parametro: ID del psicólogo,
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
