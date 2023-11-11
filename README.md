@@ -2,30 +2,30 @@
 
  Pacientes
  
-  -GET /Paciente/:dni                  Parametro: DNI del paciente
-  -POST /Paciente/                     Query String: DNI, name, email
-  -PUT /Paciente/:dni                  Parametro: DNI | Query String: email
-  -DEL /Paciente/:dni                  Parametro: DNI del paciente | Authenticacion JWT
+  - GET /Paciente/:dni                  Parametro: DNI del paciente
+  - POST /Paciente/                     Query String: DNI, name, email
+  - PUT /Paciente/:dni                  Parametro: DNI | Query String: email
+  - DEL /Paciente/:dni                  Parametro: DNI del paciente | Authenticacion JWT
 
  Patologias
 
-  -GET /Patologia/:id_patologia        Parametro: id_patologia
-  -POST /Patologia/                    Query String: id_patologia, descripcion de la patologia
-  -PUT /Patologia/:id_patologia        Parametro: id_patologia | QueryString: descripcion de la patologia
-  -DEL /Patologia/:id_patologia        Parametro: id_patologia
+  - GET /Patologia/:id_patologia        Parametro: id_patologia
+  - POST /Patologia/                    Query String: id_patologia, descripcion de la patologia
+  - PUT /Patologia/:id_patologia        Parametro: id_patologia | QueryString: descripcion de la patologia
+  - DEL /Patologia/:id_patologia        Parametro: id_patologia
  
  Patologias Del Paciente
 
- -GET /Paciente/:dni/Patologia/         Parametro: DNI del paciente
- -POST /Paciente/:dni/Patologia/        Parametro: DNI del paciente | Query String: descripcion de la patologia
- -DEL /Paciente/:dni/Patologia/         Parametro: DNI del paciente
+ - GET /Paciente/:dni/Patologia/         Parametro: DNI del paciente
+ - POST /Paciente/:dni/Patologia/        Parametro: DNI del paciente | Query String: descripcion de la patologia
+ - DEL /Paciente/:dni/Patologia/         Parametro: DNI del paciente
     
  Psicólogo
   
-  -GET /Psicólogo/:id_psicologo         Parametro: ID del psicologo
-  -POST /Psicólogo/                     Query String: ID del psicologo, nombre, turno
-  -PUT /Psicólogo/:id_psicologo         Parametro: ID del psicologo | Query String: turno 
-  -DEL /Psicólogo/:id_psicologo         Parametro: ID del psicólogo,
+  - GET /Psicólogo/:id_psicologo         Parametro: ID del psicologo
+  - POST /Psicólogo/                     Query String: ID del psicologo, nombre, turno
+  - PUT /Psicólogo/:id_psicologo         Parametro: ID del psicologo | Query String: turno 
+  - DEL /Psicólogo/:id_psicologo         Parametro: ID del psicólogo,
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
