@@ -70,7 +70,8 @@ const putPatologia = async (req, res) => {
     const pool = await getConnection();
     try{
         if(message !== "") throw new Error(message);
-        const { id_patologia, descripcion } = req.query;
+        const { id_patologia } = req.params;
+        const { descripcion } = req.query;
         const result = await pool.execute("UPDATE Patologia SET(descripcion) = (:descripcion) WHERE id_patologia = :id_patologia", [descripcion, id_patologia]);
         if(result.rowsAffected < 1) throw new Error(em.PACIENTE_NO_INSERTADO);
         commitPool(pool);

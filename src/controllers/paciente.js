@@ -3,6 +3,15 @@ const { validacionEntrada } = require('./generalFunctions');
 const { getConnection, closeConnection, commitPool } = require('../database/oracle');
 
 
+const getUsuario = async(dni) => {
+    const pool = await getConnection();
+    
+    const result = await pool.execute("SELECT * FROM Paciente WHERE dni = :dni", [dni]);
+    closeConnection(pool);
+    if(!result.rows[0]) throw new Error(em.NO_ENCONTRO_PACIENTE);
+    return true;
+    
+}
 
 const getPaciente = async (req, res) => {
     var message = "";
@@ -114,6 +123,7 @@ const deletePaciente = async (req, res) => {
 
 
 module.exports = {
+    getUsuario,
     getPaciente,
     postPaciente,
     putPaciente,

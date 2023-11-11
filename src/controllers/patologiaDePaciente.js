@@ -46,8 +46,8 @@ const postPatologiaDelPaciente = async (req, res) => {
     const pool = await getConnection();
     try{
         if(message !== "") throw new Error(message);
-        
-        const { dni, descripcion } = req.query;
+        const { dni } = req.params;
+        const { descripcion } = req.query;
         
         const paciente = await pool.execute("SELECT nombre FROM Paciente WHERE dni = :dni", [dni]);
         if(!paciente.rows[0]) throw new Error(em.NO_ENCONTRO_PACIENTE);

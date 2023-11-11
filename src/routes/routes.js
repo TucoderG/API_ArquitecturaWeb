@@ -5,16 +5,26 @@ const pacienteDB = require('../controllers/paciente');
 const PatologiaDB = require('../controllers/patologia');
 const PatologiaDelPacienteDB = require('../controllers/patologiaDePaciente');
 const psicologoDB = require('../controllers/psicologo');
+const session = require('../controllers/session');
+const { authenticacionToken } = require('../middlewares/auth');
 
 const router = express();
 
 // EndPoints
 
+// Session ///////////////////////////////////////////////////////
+router.get('/Session/Paciente/:dni',
+        param('dni', "Ingrese el DNI del paciente")
+        .trim()
+        .isLength({min: 8})
+        .escape(),
+    session.logIn);
+
 // Paciente //////////////////////////////////////////////////////
 router.get('/Paciente/:dni', 
         param('dni', "Ingrese el DNI del paciente")
         .trim()
-        .isLength({min: 7})
+        .isLength({min: 8})
         .escape(),
 
     pacienteDB.getPaciente);
@@ -41,11 +51,7 @@ router.put('/Paciente',
         .trim()
         .isLength({min: 8})
         .escape(),
-
-        query('name', 'Ingrese un nombre valido')
-        .trim()
-        .escape(),
-
+        
         query('email', 'Ingrese un email valido')
         .trim()
         .isEmail()
@@ -53,7 +59,7 @@ router.put('/Paciente',
 
     pacienteDB.putPaciente);
 
-router.delete('/Paciente/:dni', 
+router.delete('/Paciente/:dni', authenticacionToken,
         param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isLength({min: 8})
@@ -77,8 +83,8 @@ router.post('/Patologia',
         
     PatologiaDB.postPatologia);
 
-router.put('/Patologia', 
-        query('id_patologia', "Ingrese el ID de la patologia..")
+router.put('/Patologia/:id_patologia', 
+        param('id_patologia', "Ingrese el ID de la patologia..")
         .trim()
         .escape(),
         query('descripcion', 'Ingrese la descripcion de la patologia.'),
@@ -92,8 +98,8 @@ router.delete('/Patologia/:id_patologia',
 
     PatologiaDB.deletePatologia);
 
-// Patologias De Pacientes
-router.get('/Paciente/Patologia/:dni',
+// Patologias De Pacientes ///////////////////////////////////////
+router.get('/Paciente/:dni/Patologia/',
         param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isLength({min: 8})
@@ -101,8 +107,8 @@ router.get('/Paciente/Patologia/:dni',
         
     PatologiaDelPacienteDB.getPatologiasDelPaciente);
 
-router.post('/Paciente/Patologia',
-        query('dni', "Ingrese el DNI del paciente")
+router.post('/Paciente/:dni/Patologia',
+        param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isLength({min: 8})
         .escape(),
