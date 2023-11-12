@@ -1,5 +1,11 @@
 # EndPoints
 
+ Session
+
+  - /Session/Paciente/:dni             Parametro: DNI del paciente
+  - /Session/Psicologo/:id_psicologo   Parametro: ID del psicologo
+
+Todos los endpoints siguientes cuentan con authenticacion.
  Pacientes
  
   - GET /Paciente/:dni                  Parametro: DNI del paciente
