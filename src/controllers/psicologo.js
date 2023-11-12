@@ -2,7 +2,15 @@ const em = require('../errors/messages');
 const { validacionEntrada } = require('./generalFunctions');
 const { getConnection, closeConnection, commitPool } = require('../database/oracle');
 
-
+const getUsuario = async(id_psicologo) => {
+    const pool = await getConnection();
+    
+    const result = await pool.execute("SELECT * FROM Psicologo WHERE id_psicologo = :id_psicologo", [id_psicologo]);
+    closeConnection(pool);
+    if(!result.rows[0]) throw new Error(em.NO_ENCONTRO_PACIENTE);
+    return true;
+    
+}
 
 const getPsicologo = async (req, res) => {
     var message = "";
@@ -115,6 +123,7 @@ const deletePsicologo = async (req, res) => {
 
 
 module.exports = {
+    getUsuario,
     getPsicologo,
     postPsicologo,
     putPsicologo,

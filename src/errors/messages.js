@@ -44,4 +44,5 @@ module.exports = {
 
     // EXTRA 
     ERROR_INESPERADO: 'Ocurrio un error inesperado..',
+    ACCESO_DENEGARO_ROL: 'No tienes los privilegios para acceder a este endpoint...',
 }   

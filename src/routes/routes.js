@@ -6,7 +6,7 @@ const PatologiaDB = require('../controllers/patologia');
 const PatologiaDelPacienteDB = require('../controllers/patologiaDePaciente');
 const psicologoDB = require('../controllers/psicologo');
 const session = require('../controllers/session');
-const { authenticacionToken } = require('../middlewares/auth');
+const { authenticacionToken, verifyPaciente, verifyPsicologo } = require('../middlewares/auth');
 
 const router = express();
 
@@ -18,10 +18,16 @@ router.get('/Session/Paciente/:dni',
         .trim()
         .isLength({min: 8})
         .escape(),
-    session.logIn);
+    session.logInPaciente);
+
+router.get('/Session/Psicologo/:id_psicologo', 
+        param('id_psicologo', "Ingrese su ID de Psicologo")
+        .trim()
+        .escape(),
+    session.logInPsicologo)
 
 // Paciente //////////////////////////////////////////////////////
-router.get('/Paciente/:dni', 
+router.get('/Paciente/:dni', authenticacionToken, verifyPaciente, 
         param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isLength({min: 8})
@@ -29,7 +35,7 @@ router.get('/Paciente/:dni',
 
     pacienteDB.getPaciente);
 
-router.post('/Paciente', 
+router.post('/Paciente', authenticacionToken, verifyPaciente,
         query('dni', 'Ingrese el DNI del paciente')
         .trim()
         .isLength({min: 8})
@@ -46,7 +52,7 @@ router.post('/Paciente',
 
     pacienteDB.postPaciente);
 
-router.put('/Paciente',
+router.put('/Paciente', authenticacionToken, verifyPaciente,
         query('dni', 'Ingrese el DNI del paciente')
         .trim()
         .isLength({min: 8})
@@ -59,7 +65,7 @@ router.put('/Paciente',
 
     pacienteDB.putPaciente);
 
-router.delete('/Paciente/:dni', authenticacionToken,
+router.delete('/Paciente/:dni', authenticacionToken, verifyPaciente,
         param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isLength({min: 8})
@@ -68,14 +74,14 @@ router.delete('/Paciente/:dni', authenticacionToken,
  pacienteDB.deletePaciente);
 
 // Patologia  /////////////////////////////////////////////////////
-router.get('/Patologia/:id_patologia', 
+router.get('/Patologia/:id_patologia', authenticacionToken, verifyPsicologo,
         param('id_patologia', "Ingrese el ID de la patologia..")
         .trim()
         .escape(),
         
     PatologiaDB.getPatologia);
 
-router.post('/Patologia', 
+router.post('/Patologia',  authenticacionToken, verifyPsicologo,
         query('id_patologia', "Ingrese el ID de la patologia..")
         .trim()
         .escape(),
@@ -83,7 +89,7 @@ router.post('/Patologia',
         
     PatologiaDB.postPatologia);
 
-router.put('/Patologia/:id_patologia', 
+router.put('/Patologia/:id_patologia',  authenticacionToken, verifyPsicologo,
         param('id_patologia', "Ingrese el ID de la patologia..")
         .trim()
         .escape(),
@@ -91,7 +97,7 @@ router.put('/Patologia/:id_patologia',
         
     PatologiaDB.putPatologia);
 
-router.delete('/Patologia/:id_patologia', 
+router.delete('/Patologia/:id_patologia',  authenticacionToken, verifyPsicologo,
         param('id_patologia', "Ingrese el ID de la patologia..")
         .trim()
         .escape(),
@@ -99,7 +105,7 @@ router.delete('/Patologia/:id_patologia',
     PatologiaDB.deletePatologia);
 
 // Patologias De Pacientes ///////////////////////////////////////
-router.get('/Paciente/:dni/Patologia/',
+router.get('/Paciente/:dni/Patologia/', authenticacionToken,
         param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isLength({min: 8})
@@ -107,7 +113,7 @@ router.get('/Paciente/:dni/Patologia/',
         
     PatologiaDelPacienteDB.getPatologiasDelPaciente);
 
-router.post('/Paciente/:dni/Patologia',
+router.post('/Paciente/:dni/Patologia', authenticacionToken,
         param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isLength({min: 8})
@@ -117,7 +123,7 @@ router.post('/Paciente/:dni/Patologia',
         
     PatologiaDelPacienteDB.postPatologiaDelPaciente);
 
-router.delete('/Paciente/:dni/Patologia',
+router.delete('/Paciente/:dni/Patologia', authenticacionToken,
         param('dni', "Ingrese el DNI del paciente")
         .trim()
         .isNumeric()
@@ -132,7 +138,7 @@ router.delete('/Paciente/:dni/Patologia',
     PatologiaDelPacienteDB.deletePatologiaDelPaciente);
 
 // Psicologo /////////////////////////////////////////////////////
-router.get('/Psicologo/:id_psicologo', 
+router.get('/Psicologo/:id_psicologo', authenticacionToken, verifyPsicologo,
         param('id_psicologo', "Ingrese un ID del Psicologo")
         .trim()
         .isNumeric()
@@ -141,7 +147,7 @@ router.get('/Psicologo/:id_psicologo',
     
     psicologoDB.getPsicologo);
 
-router.post('/Psicologo',  
+router.post('/Psicologo', authenticacionToken, verifyPsicologo,
         query('id_psicologo', 'Ingrese un ID de Psicologo valido')
         .trim()
         .isNumeric()
@@ -158,7 +164,7 @@ router.post('/Psicologo',
 
     psicologoDB.postPsicologo);
 
-router.put('/Psicologo/:id_psicologo/',  
+router.put('/Psicologo/:id_psicologo/', authenticacionToken, verifyPsicologo,
         param('id_psicologo', 'Ingrese el ID del Psicologo')
         .trim()
         .isNumeric()
@@ -172,7 +178,7 @@ router.put('/Psicologo/:id_psicologo/',
 
     psicologoDB.putPsicologo);
 
-router.delete('/Psicologo/:id_psicologo', 
+router.delete('/Psicologo/:id_psicologo', authenticacionToken, verifyPsicologo,
         param('id_psicologo', "Ingrese el ID del Psicologo")
         .trim()
         .isNumeric()
